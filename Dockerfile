@@ -1,6 +1,7 @@
-FROM jupyterhub/jupyterhub
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY srv/jupyterhub/jupyterhub_config.py .
-COPY adminlist .
+FROM jupyter/datascience-notebook:5ed91e8e3249 
+RUN jupyter labextension install @jupyterlab/git && \
+  pip install jupyterlab-git && \
+  jupyter serverextension enable --py jupyterlab_git && \
+  pip install nbgitpuller && \
+  jupyter serverextension enable --py nbgitpuller --sys-prefix
 
